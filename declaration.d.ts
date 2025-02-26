@@ -24,6 +24,11 @@ declare module "*.webp" {
   export default value;
 }
 
+declare module "*.js" {
+  const value: any;
+  export default value;
+}
+
 type ArticleComment = {
   userName: string;
   avatarUrl: string;

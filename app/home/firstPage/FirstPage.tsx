@@ -12,6 +12,8 @@ import { useLocalStore } from "mobx-react";
 import HomeStore from "../../../stores/HomeStore";
 import { observer } from "mobx-react";
 import icon_heart_empty from "../../../assets/icon_heart_empty.png";
+import FlowList from "../../../components/flowlist/FlowList";
+import DynamicHeightImage from "../../../components/DynamicHeightImage/DynamicHeightImage";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -48,7 +50,7 @@ const FirstPage: React.FC = observer(() => {
   }) => {
     return (
       <View style={styles.item}>
-        <Image style={styles.itemImage} source={{ uri: item.image }}></Image>
+        <DynamicHeightImage uri={item.image} />
         <Text style={styles.titleTxt}>{item.title}</Text>
         <View style={styles.nameLayout}>
           <Image
@@ -66,7 +68,7 @@ const FirstPage: React.FC = observer(() => {
   return (
     <>
       <View style={styles.root}>
-        <FlatList
+        <FlowList
           style={styles.flatList}
           data={store.homeList}
           contentContainerStyle={styles.container}
@@ -76,9 +78,8 @@ const FirstPage: React.FC = observer(() => {
           onRefresh={refreshNewData}
           onEndReachedThreshold={0.1}
           onEndReached={loadMoreData}
-          keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={<Footer />}
-        ></FlatList>
+        ></FlowList>
       </View>
     </>
   );
