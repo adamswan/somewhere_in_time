@@ -13,11 +13,8 @@ import {
 } from "react-native";
 import { Link, Stack, useRouter } from "expo-router";
 
-// import { useNavigation } from "@react-navigation/native";
-// import { StackNavigationProp } from "@react-navigation/stack";
-
 import { formatPhone, replaceBlank } from "../../utils/String";
-// import UserStore from "../../stores/UserStore";
+import UserStore from "../../stores/UserStore";
 // import Toast from "../../components/widget/Toast";
 
 import icon_logo_main from "../../assets/icon_main_logo.png";
@@ -45,22 +42,22 @@ export default () => {
 
   const [pwd, setPwd] = useState<string>("");
 
-  // const navigation = useNavigation<StackNavigationProp<any>>();
   const router = useRouter();
 
   const onLoginPress = async () => {
     const canLogin = phone?.length === 13 && pwd?.length === 6;
+
     if (!canLogin || !check) {
       return;
     }
-    // UserStore.requestLogin(replaceBlank(phone), pwd, (success: boolean) => {
-    //   if (success) {
-    //     navigation.replace("MainTab");
-    router.push("/home");
-    //   } else {
-    //     Toast.show("登陆失败，请检查用户名和密码");
-    //   }
-    // });
+    UserStore.requestLogin(replaceBlank(phone), pwd, (success: boolean) => {
+      if (success) {
+        // 登录成功
+        router.push("/home");
+      } else {
+        // Toast.show("登陆失败，请检查用户名和密码");
+      }
+    });
   };
 
   // 快速登陆（手机号登陆、微信登录）

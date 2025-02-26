@@ -7,7 +7,7 @@ import {
   UIManager,
 } from "react-native";
 import { Link, Stack, useRouter } from "expo-router";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 const HomeScreen = () => {
   // 在安卓平台启用布局动画的实验性功能

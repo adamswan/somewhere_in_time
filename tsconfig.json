@@ -6,7 +6,11 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "jsx":"react",
+    "skipLibCheck": true,
   },
   "include": [
     "**/*.ts",

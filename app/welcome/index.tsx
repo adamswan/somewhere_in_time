@@ -1,46 +1,46 @@
 import React, { useEffect } from "react";
 import { View, Image, StyleSheet } from "react-native";
-// import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-// import { load } from "../../utils/Storage";
-// import UserStore from "../../stores/UserStore";
+import { load } from "../../utils/Storages";
+import UserStore from "../../stores/UserStore";
 import { useRouter } from "expo-router";
 
 import icon_logo_main from "../../assets/icon_main_logo.png";
 
 function Welcome() {
   const router = useRouter();
-  // const navigation = useNavigation<StackNavigationProp<any>>();
 
-  // 2s 后自动跳转到登录页
+  // 2s 后，根据 async-storage 的是否有用户信息，判断用户是否已经登录
   useEffect(() => {
     setTimeout(() => {
-      router.push("/login" as any);
+      getUserInfo();
+      // router.replace("/login" as any);
     }, 2000);
   }, []);
 
-  // const getUserInfo = async () => {
-  //   const cacheUserInfo = await load("userInfo");
-  //   if (!cacheUserInfo) {
-  //     startLogin();
-  //   } else {
-  //     const parse = JSON.parse(cacheUserInfo);
-  //     if (parse) {
-  //       UserStore.setUserInfo(parse);
-  //       startHome();
-  //     } else {
-  //       startLogin();
-  //     }
-  //   }
-  // };
+  async function getUserInfo() {
+    const cacheUserInfo = await load("userInfo");
 
-  // const startLogin = () => {
-  //   navigation.replace("Login");
-  // };
+    if (!cacheUserInfo) {
+      goToLogin();
+    } else {
+      const parse = JSON.parse(cacheUserInfo);
 
-  // const startHome = () => {
-  //   navigation.replace("MainTab");
-  // };
+      if (parse) {
+        UserStore.setUserInfo(parse);
+        goToHome();
+      } else {
+        goToLogin();
+      }
+    }
+  }
+
+  const goToLogin = () => {
+    router.replace("/login" as any);
+  };
+
+  const goToHome = () => {
+    router.replace("/home" as any);
+  };
 
   return (
     <View style={styles.root}>
