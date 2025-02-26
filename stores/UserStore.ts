@@ -4,11 +4,11 @@ import { save } from "../utils/Storages";
 // import Loading from "../components/widget/Loading";
 
 class UserStore {
-  //   @observable userInfo: any;
+  @observable userInfo: any;
 
-  //   @action
+  @action
   setUserInfo = (info: any) => {
-    // this.userInfo = info;
+    this.userInfo = info;
   };
 
   requestLogin = flow(function* (
@@ -29,15 +29,15 @@ class UserStore {
 
       if (data) {
         save("userInfo", JSON.stringify(data));
-        // this.userInfo = data;
+        this.userInfo = data;
         callback?.(true);
       } else {
-        // this.userInfo = null;
+        this.userInfo = null;
         callback?.(false);
       }
     } catch (error) {
       console.log(error);
-      //   this.userInfo = null;
+      this.userInfo = null;
       callback?.(false);
     } finally {
       // Loading.hide();
