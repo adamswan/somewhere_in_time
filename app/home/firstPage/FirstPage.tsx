@@ -11,9 +11,9 @@ import React, { useEffect } from "react";
 import { useLocalStore } from "mobx-react";
 import HomeStore from "../../../stores/HomeStore";
 import { observer } from "mobx-react";
-import icon_heart_empty from "../../../assets/icon_heart_empty.png";
 import FlowList from "../../../components/flowlist/FlowList";
 import DynamicHeightImage from "../../../components/DynamicHeightImage/DynamicHeightImage";
+import Praise from "../../../components/Praise/Praise";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -37,6 +37,11 @@ const FirstPage: React.FC = observer(() => {
     store.requestHomeList();
   };
 
+  // 点赞传来的值：是否点赞了
+  const onValChange = (val: boolean) => {
+    console.log("字组件", val);
+  };
+
   const Footer = () => {
     return <Text style={styles.footerTxt}>没有更多数据</Text>;
   };
@@ -58,7 +63,10 @@ const FirstPage: React.FC = observer(() => {
             source={{ uri: item.avatarUrl }}
           ></Image>
           <Text style={styles.nameTxt}>{item.userName}</Text>
-          <Image style={styles.heart} source={icon_heart_empty}></Image>
+          <Praise
+            isFavorite={item.isFavorite}
+            onValChange={onValChange}
+          ></Praise>
           <Text style={styles.countTxt}>{item.favoriteCount}</Text>
         </View>
       </View>
@@ -132,11 +140,6 @@ const styles = StyleSheet.create({
     color: "#999",
     marginLeft: 6,
     flex: 1,
-  },
-  heart: {
-    width: 20,
-    height: 20,
-    resizeMode: "contain",
   },
   countTxt: {
     fontSize: 14,
