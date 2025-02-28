@@ -36,6 +36,8 @@ const HomeScreen = () => {
           <Stack.Screen name="login" options={{ headerShown: false }} />
           {/* 首页 */}
           <Stack.Screen name="home" options={{ headerShown: false }} />
+          {/* 文章详情 */}
+          <Stack.Screen name="articleDetail" options={{ headerShown: false }} />
         </Stack>
       </View>
     </>

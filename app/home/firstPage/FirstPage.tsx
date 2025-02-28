@@ -6,8 +6,9 @@ import {
   Dimensions,
   FlatList,
   Image,
+  TouchableOpacity,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useLocalStore } from "mobx-react";
 import HomeStore from "../../../stores/HomeStore";
 import { observer } from "mobx-react";
@@ -16,6 +17,7 @@ import DynamicHeightImage from "../../../components/DynamicHeightImage/DynamicHe
 import Praise from "../../../components/Praise/Praise";
 import TitleBar from "../../../components/TitleBar/TitleBar";
 import CategoryList from "../../../components/CategoryList/CategoryList";
+import { useRouter } from "expo-router";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -46,6 +48,14 @@ const FirstPage: React.FC = observer(() => {
     console.log("字组件", val);
   };
 
+  const router = useRouter();
+
+  // 点击瀑布流的item, 跳转到详情页
+  const handlePressBox = useCallback((id: number) => {
+    console.log("点击了item");
+    router.push(`/home/articleDetail/articleDetail?id=${id}`);
+  }, []);
+
   const Footer = () => {
     return <Text style={styles.footerTxt}>没有更多数据</Text>;
   };
@@ -58,7 +68,10 @@ const FirstPage: React.FC = observer(() => {
     index: number;
   }) => {
     return (
-      <View style={styles.item}>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => handlePressBox(item.id)}
+      >
         <DynamicHeightImage uri={item.image} />
         <Text style={styles.titleTxt}>{item.title}</Text>
         <View style={styles.nameLayout}>
@@ -73,7 +86,7 @@ const FirstPage: React.FC = observer(() => {
           ></Praise>
           <Text style={styles.countTxt}>{item.favoriteCount}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
