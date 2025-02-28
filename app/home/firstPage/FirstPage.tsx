@@ -14,14 +14,18 @@ import { observer } from "mobx-react";
 import FlowList from "../../../components/flowlist/FlowList";
 import DynamicHeightImage from "../../../components/DynamicHeightImage/DynamicHeightImage";
 import Praise from "../../../components/Praise/Praise";
+import TitleBar from "../../../components/TitleBar/TitleBar";
+import CategoryList from "../../../components/CategoryList/CategoryList";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 const FirstPage: React.FC = observer(() => {
   const store = useLocalStore(() => new HomeStore());
+  const categoryList = store.categoryList.filter((i) => i.isAdd);
 
   useEffect(() => {
     store.requestHomeList();
+    store.getCategoryList();
   }, []);
 
   // 下拉刷新
@@ -76,7 +80,14 @@ const FirstPage: React.FC = observer(() => {
   return (
     <>
       <View style={styles.root}>
+        <TitleBar
+          tab={1}
+          onTabChanged={(tab: number) => {
+            console.log(`tab=${tab}`);
+          }}
+        />
         <FlowList
+          keyExtractor={(item: ArticleSimple) => `${item.id}`}
           style={styles.flatList}
           data={store.homeList}
           contentContainerStyle={styles.container}
@@ -87,6 +98,15 @@ const FirstPage: React.FC = observer(() => {
           onEndReachedThreshold={0.1}
           onEndReached={loadMoreData}
           ListFooterComponent={<Footer />}
+          ListHeaderComponent={
+            <CategoryList
+              categoryList={categoryList}
+              allCategoryList={store.categoryList}
+              onCategoryChange={(category: Category) => {
+                console.log(JSON.stringify(category));
+              }}
+            />
+          }
         ></FlowList>
       </View>
     </>

@@ -57,10 +57,13 @@ export default class HomeStore {
     }
   };
 
+  // 获取频道列表
   getCategoryList = async () => {
     const cacheListStr = await load("categoryList");
+
     if (cacheListStr) {
       const cacheList = JSON.parse(cacheListStr);
+
       if (cacheList?.length) {
         this.categoryList = cacheList;
       } else {
@@ -73,7 +76,7 @@ export default class HomeStore {
 }
 
 const DEFAULT_CATEGORY_LIST = [
-  // 默认添加频道
+  // 我的频道（已加入到频道栏）
   { name: "推荐", default: true, isAdd: true },
   { name: "视频", default: true, isAdd: true },
   { name: "直播", default: true, isAdd: true },
@@ -104,7 +107,7 @@ const DEFAULT_CATEGORY_LIST = [
   { name: "动漫", default: false, isAdd: true },
   { name: "游戏", default: false, isAdd: true },
 
-  // 默认添加频道
+  // 推荐频道（还未加入到频道栏）
   { name: "家装", default: false, isAdd: false },
   { name: "心理", default: false, isAdd: false },
   { name: "户外", default: false, isAdd: false },
