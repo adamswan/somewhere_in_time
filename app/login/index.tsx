@@ -11,7 +11,7 @@ import {
   Platform,
   UIManager,
 } from "react-native";
-import { Link, Stack, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 
 import { formatPhone, replaceBlank } from "../../utils/String";
 import UserStore from "../../stores/UserStore";
